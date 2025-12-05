@@ -1,18 +1,19 @@
+use std::{env, future::{Ready, ready}};
+
 use actix_web::{
-    dev::Payload, error::ErrorUnauthorized, web, FromRequest, HttpRequest,
+    dev::Payload, error::ErrorUnauthorized,  FromRequest, HttpRequest,
 };
-use jsonwebtoken::{decode, DecodingKey, Validation};
-use std::{env, future::Ready, future::ready};
+use jsonwebtoken::{DecodingKey, Validation, decode};
 
-use crate::routes::user::Claims;
+use crate::models::Claims;
 
-pub struct JwtClaims(pub Claims);
+pub struct JwtClaims (pub Claims);
 
 impl FromRequest for JwtClaims {
     type Error = actix_web::Error;
-    type Future = Ready<Result<Self, Self::Error>>;
+    type Future = Ready<Result<Self,Self::Error>>;
 
-    fn from_request(req: &HttpRequest, _: &mut Payload) -> Self::Future {
+        fn from_request(req: &HttpRequest, _: &mut Payload) -> Self::Future {
         let auth_header = req.headers().get("Authorization");
 
         if let Some(header_value) = auth_header {
