@@ -1,0 +1,37 @@
+# .app_data(actix_web::web::Data::new(db.clone()))
+
+first you have to understand this 
+HttpServer::new(move || {
+    App::new()
+        ...
+})
+Actix creates MULTIPLE OS WORKER THREADS, usually equal to CPU cores.
+
+lets say we have 4 core machine Actix creastes 
+Worker thread 1
+Worker thread 2
+Worker thread 3
+Worker thread 4
+
+Each worker thread runs:
+App::new()
+So the closure you provide is executed once for each worker.
+
+# Now the important part  => 
+.app_data(actix_web::web::Data::new(db.clone()))
+
+What is happening here ? 
+
+db.clone() is called
+It clones the Arc inside PgPool
+Now this worker thread has a pointer to the same real connection pool
+Actix stores it in web::Data
+Handlers can now access it:
+
+why clone 
+Because 
+
+The closure is executed once per worker
+Each worker needs its own copy of the pointer
+But all pointers refer to the same underlying pool
+You are not creating multiple pools.

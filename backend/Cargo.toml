@@ -10,3 +10,5 @@ db = { path = "../db" }
 dotenvy = "0.15.7"
 jsonwebtoken = {version = "10.2.0", features = ["rust_crypto"]}
 serde = {version = "1.0.228", features = ["derive"]}
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["serde", "v4"] }

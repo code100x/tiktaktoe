@@ -6,4 +6,8 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.100"
 serde = {version = "1.0.228", features = ["derive"]}
-sqlx = {version = "0.8.6", features = ["postgres", "runtime-tokio", "uuid"]}
+sqlx = {version = "0.8.6", features = ["postgres", "runtime-tokio", "uuid","chrono"]}
+dotenvy = "0.15.7"
+uuid = { version = "1.6", features = ["serde", "v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+

@@ -1,0 +1,9 @@
+# RoomManager => 
+what RoomManager actually does =>
+It manages game rooms (room_id: Uuid → Room), tracks which user is in which room and their WsClient addresses. Handles join/leave/move messages and sends game updates to players.
+
+# WsClient =>
+WsClient: one per WebSocket connection. Parses incoming JSON messages from client and forwards appropriate commands to RoomManager. Also accepts RoomMessage from RoomManager and writes JSON back to the socket.
+
+# GameManager => 
+Game: immutable/functional helper for applying moves, detecting win/draw, and returning the new state.
